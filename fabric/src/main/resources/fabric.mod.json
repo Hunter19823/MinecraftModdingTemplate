@@ -1,21 +1,27 @@
 {
     "schemaVersion": 1,
-    "id": "moddingtemplate",
-    "version": "${version}",
-    "name": "ModdingTemplate",
-    "description": "This is a template for setting one of my mods",
-    "authors": [],
-    "contact": {},
-    "license": "MIT",
-    "icon": "icon.png",
+    "id": "${mod_id}",
+    "version": "${mod_version}",
+    "name": "${mod_name}",
+    "description": "${mod_description}",
+    "authors": [
+        "${mod_author}"
+    ],
+    "contact": {
+        "homepage": "${mod_homepage}",
+        "sources": "${mod_github}/tree/${minecraft_version}",
+        "issues": "${mod_github}/issues"
+    },
+    "license": "${mod_license}",
+    "icon": "${mod_icon}",
     "environment": "*",
     "entrypoints": {},
     "mixins": [
-        "moddingtemplate.mixins.json",
-        "moddingtemplate-common.mixins.json"
+        "${mod_id}.mixins.json",
+        "${mod_id}-common.mixins.json"
     ],
     "depends": {
         "fabricloader": ">=0.14.24",
-        "minecraft": ">=1.18.2"
+        "minecraft": ">=${minecraft_version}"
     }
 }

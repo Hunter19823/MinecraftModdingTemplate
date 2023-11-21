@@ -39,8 +39,14 @@ subprojects {
 
     processResources {
         outputs.upToDateWhen { false }
-
-        filesMatching(["META-INF/mods.toml", "pack.mcmeta", "fabric.mod.json"]) {
+        var files = [
+            "META-INF/mods.toml",
+            "pack.mcmeta",
+            "fabric.mod.json",
+            "${rootProject.mod_id}-common.mixins.js".toString(),
+            "${rootProject.mod_id}.mixins.json".toString()
+        ]
+        filesMatching(files) {
             expand project.properties
         }
     }
