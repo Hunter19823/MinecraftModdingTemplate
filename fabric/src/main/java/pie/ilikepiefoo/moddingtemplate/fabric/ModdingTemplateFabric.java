@@ -1,7 +1,7 @@
 package pie.ilikepiefoo.moddingtemplate.fabric;
 
-import pie.ilikepiefoo.moddingtemplate.ModdingTemplate;
 import net.fabricmc.api.ModInitializer;
+import pie.ilikepiefoo.moddingtemplate.ModdingTemplate;
 
 public class ModdingTemplateFabric implements ModInitializer {
     @Override

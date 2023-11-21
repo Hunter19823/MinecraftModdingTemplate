@@ -7,9 +7,9 @@ dependencies {
 }
 
 architectury {
-	common(enabled_platforms.split(","))
+    common(enabled_platforms.split(","))
 }
 
 loom {
-	accessWidenerPath = file("src/main/resources/${mod_id}.accesswidener")
+    accessWidenerPath = file("src/main/resources/${mod_id}.accesswidener")
 }

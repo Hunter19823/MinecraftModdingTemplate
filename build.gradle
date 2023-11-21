@@ -29,11 +29,11 @@ subprojects {
     dependencies {
         minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
 
-		// The following line declares the mojmap mappings, you may use other mappings as well
-		mappings loom.layered() {
-			officialMojangMappings()
-			// parchment("org.parchmentmc.data:parchment-1.17.1:2021.10.10")
-		}
+        // The following line declares the mojmap mappings, you may use other mappings as well
+        mappings loom.layered() {
+            officialMojangMappings()
+            // parchment("org.parchmentmc.data:parchment-1.17.1:2021.10.10")
+        }
     }
 
 
@@ -63,44 +63,44 @@ subprojects {
 
 
 subprojects {
-	if (project.path == ':common') {
-		return
-	}
+    if (project.path == ':common') {
+        return
+    }
 
-	configurations {
-		bundle {
-			canBeResolved(true)
-			canBeConsumed(false)
-		}
+    configurations {
+        bundle {
+            canBeResolved(true)
+            canBeConsumed(false)
+        }
 
-		common
-		compileClasspath.extendsFrom common
-		runtimeClasspath.extendsFrom common
-	}
+        common
+        compileClasspath.extendsFrom common
+        runtimeClasspath.extendsFrom common
+    }
 
-	jar {
-		archiveClassifier.set "dev"
-	}
+    jar {
+        archiveClassifier.set "dev"
+    }
 
-	shadowJar {
-		archiveClassifier.set "dev-shadow"
-		configurations = [
-			project.configurations.bundle
-		]
-	}
+    shadowJar {
+        archiveClassifier.set "dev-shadow"
+        configurations = [
+            project.configurations.bundle
+        ]
+    }
 
-	remapJar {
-		dependsOn shadowJar
-		inputFile.set shadowJar.archiveFile
-		archiveBaseName.set "${rootProject.mod_id}-${project.name}"
-		archiveClassifier.set null
-	}
+    remapJar {
+        dependsOn shadowJar
+        inputFile.set shadowJar.archiveFile
+        archiveBaseName.set "${rootProject.mod_id}-${project.name}"
+        archiveClassifier.set null
+    }
 
-	sourcesJar {
-		from(project(':common').sourceSets.main.allSource) {
-			exclude("${mod_id}.accesswidener") // duplicate on fabric, unneeded on forge
-		}
-	}
+    sourcesJar {
+        from(project(':common').sourceSets.main.allSource) {
+            exclude("${mod_id}.accesswidener") // duplicate on fabric, unneeded on forge
+        }
+    }
 }
 
 allprojects {
@@ -112,7 +112,7 @@ allprojects {
     version = rootProject.mod_version
     group = rootProject.maven_group
 
-	ext.ENV = System.getenv()
+    ext.ENV = System.getenv()
 
     repositories {
         // Add repositories to retrieve artifacts from in here.
@@ -166,19 +166,19 @@ allprojects {
 }
 
 tasks.register('collectJars', Copy) {
-	subprojects {
-		if (project.path == ":common") {
-			return
-		}
+    subprojects {
+        if (project.path == ":common") {
+            return
+        }
 
-		def remapJar = project.tasks.named('remapJar')
-		dependsOn remapJar
-		from remapJar
-	}
+        def remapJar = project.tasks.named('remapJar')
+        dependsOn remapJar
+        from remapJar
+    }
 
-	into(buildDir.toPath().resolve("libs"))
+    into(buildDir.toPath().resolve("libs"))
 }
 
 assemble {
-	dependsOn(collectJars)
+    dependsOn(collectJars)
 }

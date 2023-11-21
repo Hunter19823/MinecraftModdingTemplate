@@ -1,5 +1,5 @@
 plugins {
-	id 'me.shedaniel.unified-publishing'
+    id 'me.shedaniel.unified-publishing'
 }
 
 var loader = "fabric"
@@ -16,30 +16,30 @@ configurations {
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
     developmentFabric.extendsFrom common
-	configureEach {
-		resolutionStrategy {
-			force "net.fabricmc:fabric-loader:${fabric_loader_version}"
-		}
-	}
+    configureEach {
+        resolutionStrategy {
+            force "net.fabricmc:fabric-loader:${fabric_loader_version}"
+        }
+    }
 }
 
 loom {
-	accessWidenerPath = project(":common").file("src/main/resources/${mod_id}.accesswidener")
+    accessWidenerPath = project(":common").file("src/main/resources/${mod_id}.accesswidener")
 }
 
 // The AccessWidener file is needed in :fabric project resources when the game is run.
 tasks.register('copyAccessWidener', Copy) {
-	from project(":common").file("src/main/resources/${mod_id}.accesswidener")
-	into file("src/generated/resources")
+    from project(":common").file("src/main/resources/${mod_id}.accesswidener")
+    into file("src/generated/resources")
 }
 
 sourceSets {
-	main {
-		resources {
-			// srcDir generatedResources
-			srcDir copyAccessWidener
-		}
-	}
+    main {
+        resources {
+            // srcDir generatedResources
+            srcDir copyAccessWidener
+        }
+    }
 }
 
 
@@ -60,40 +60,39 @@ components.java {
 }
 
 
-
 unifiedPublishing {
-	project {
-		releaseType = project.upload_type
-		gameVersions = [
-			project.minecraft_version
-		]
-		gameLoaders = ["${loader}"]
-		displayName = "$mod_name ${Loader} $project.version"
+    project {
+        releaseType = project.upload_type
+        gameVersions = [
+            project.minecraft_version
+        ]
+        gameLoaders = ["${loader}"]
+        displayName = "$mod_name ${Loader} $project.version"
 
-		mainPublication remapJar
+        mainPublication remapJar
 
-		relations {
-			depends {
+        relations {
+            depends {
 //				 curseforge = modrinth = "architectury-api"
-			}
-			depends {
+            }
+            depends {
 //				 curseforge = modrinth = "kubejs"
-			}
-		}
+            }
+        }
 
-		if (ENV.CURSEFORGE_KEY && project.curseforge_id) {
-			curseforge {
-				token = ENV.CURSEFORGE_KEY
-				id = project.curseforge_id
-			}
-		}
+        if (ENV.CURSEFORGE_KEY && project.curseforge_id) {
+            curseforge {
+                token = ENV.CURSEFORGE_KEY
+                id = project.curseforge_id
+            }
+        }
 
-		if (ENV.MODRINTH_TOKEN && project.modrinth_id) {
-			modrinth {
-				token = ENV.MODRINTH_TOKEN
-				id = project.modrinth_id
-				version = "${mod_id}-${loader}-${mod_version}"
-			}
-		}
-	}
+        if (ENV.MODRINTH_TOKEN && project.modrinth_id) {
+            modrinth {
+                token = ENV.MODRINTH_TOKEN
+                id = project.modrinth_id
+                version = "${mod_id}-${loader}-${mod_version}"
+            }
+        }
+    }
 }
