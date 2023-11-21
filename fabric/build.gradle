@@ -1,6 +1,9 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "7.1.2"
+	id 'me.shedaniel.unified-publishing'
 }
+
+var loader = "fabric"
+var Loader = "Fabric"
 
 architectury {
     platformSetupLoomIde()
@@ -13,7 +16,32 @@ configurations {
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
     developmentFabric.extendsFrom common
+	configureEach {
+		resolutionStrategy {
+			force "net.fabricmc:fabric-loader:${fabric_loader_version}"
+		}
+	}
 }
+
+loom {
+	accessWidenerPath = project(":common").file("src/main/resources/${mod_id}.accesswidener")
+}
+
+// The AccessWidener file is needed in :fabric project resources when the game is run.
+tasks.register('copyAccessWidener', Copy) {
+	from project(":common").file("src/main/resources/${mod_id}.accesswidener")
+	into file("src/generated/resources")
+}
+
+sourceSets {
+	main {
+		resources {
+			// srcDir generatedResources
+			srcDir copyAccessWidener
+		}
+	}
+}
+
 
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
@@ -25,51 +53,47 @@ dependencies {
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
 }
 
-processResources {
-    inputs.property "version", project.version
-
-    filesMatching("fabric.mod.json") {
-        expand "version": project.version
-    }
-}
-
-shadowJar {
-    configurations = [project.configurations.shadowCommon]
-    archiveClassifier.set("dev-shadow")
-}
-
-remapJar {
-    inputFile.set shadowJar.archiveFile
-    dependsOn shadowJar
-    archiveClassifier.set(null)
-}
-
-jar {
-    archiveClassifier.set("dev")
-}
-
-sourcesJar {
-    def commonSources = project(":common").sourcesJar
-    dependsOn commonSources
-    from commonSources.archiveFile.map { zipTree(it) }
-}
-
 components.java {
     withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
         skip()
     }
 }
 
-publishing {
-    publications {
-        mavenFabric(MavenPublication) {
-            artifactId = rootProject.archives_base_name + "-" + project.name
-            from components.java
-        }
-    }
 
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-    repositories {
-        // Add repositories to publish to here.
-    }
+
+unifiedPublishing {
+	project {
+		releaseType = project.upload_type
+		gameVersions = [
+			project.minecraft_version
+		]
+		gameLoaders = ["${loader}"]
+		displayName = "$mod_name ${Loader} $project.version"
+
+		mainPublication remapJar
+
+		relations {
+			depends {
+//				 curseforge = modrinth = "architectury-api"
+			}
+			depends {
+//				 curseforge = modrinth = "kubejs"
+			}
+		}
+
+		if (ENV.CURSEFORGE_KEY && project.curseforge_id) {
+			curseforge {
+				token = ENV.CURSEFORGE_KEY
+				id = project.curseforge_id
+			}
+		}
+
+		if (ENV.MODRINTH_TOKEN && project.modrinth_id) {
+			modrinth {
+				token = ENV.MODRINTH_TOKEN
+				id = project.modrinth_id
+				version = "${mod_id}-${loader}-${mod_version}"
+			}
+		}
+	}
 }

@@ -7,19 +7,9 @@ dependencies {
 }
 
 architectury {
-    common("fabric", "forge")
+	common(enabled_platforms.split(","))
 }
 
-publishing {
-    publications {
-        mavenCommon(MavenPublication) {
-            artifactId = rootProject.archives_base_name
-            from components.java
-        }
-    }
-
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-    repositories {
-        // Add repositories to publish to here.
-    }
+loom {
+	accessWidenerPath = file("src/main/resources/${mod_id}.accesswidener")
 }
