@@ -43,9 +43,10 @@ subprojects {
             "META-INF/mods.toml",
             "pack.mcmeta",
             "fabric.mod.json",
-            "${rootProject.mod_id}-common.mixins.js".toString(),
+            "${rootProject.mod_id}-common.mixins.json".toString(),
             "${rootProject.mod_id}.mixins.json".toString()
         ]
+        print(files)
         filesMatching(files) {
             expand project.properties
         }

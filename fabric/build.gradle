@@ -24,7 +24,10 @@ configurations {
 }
 
 loom {
-    accessWidenerPath = project(":common").file("src/main/resources/${mod_id}.accesswidener")
+    var accessWidener = project(":common").file("src/main/resources/${mod_id}.accesswidener");
+    if (accessWidener.exists()) {
+        accessWidenerPath = accessWidener
+    }
 }
 
 // The AccessWidener file is needed in :fabric project resources when the game is run.

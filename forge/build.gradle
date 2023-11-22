@@ -18,15 +18,19 @@ configurations {
 }
 
 loom {
-    accessWidenerPath = project(":common").file("src/main/resources/${mod_id}.accesswidener")
+    var accessWidener = project(":common").file("src/main/resources/${mod_id}.accesswidener");
+    if (accessWidener.exists()) {
+        accessWidenerPath = accessWidener
 
-    forge {
-        convertAccessWideners = true
-        extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
-    }
 
-    interfaceInjection {
-        interfaceInjectionSourceSets.add project(':common').sourceSets.main
+        forge {
+            convertAccessWideners = true
+            extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
+        }
+
+        interfaceInjection {
+            interfaceInjectionSourceSets.add project(':common').sourceSets.main
+        }
     }
 }
 
