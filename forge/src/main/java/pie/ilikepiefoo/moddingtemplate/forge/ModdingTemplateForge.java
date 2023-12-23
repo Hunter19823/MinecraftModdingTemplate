@@ -1,15 +1,14 @@
 package pie.ilikepiefoo.moddingtemplate.forge;
 
-import dev.architectury.platform.forge.EventBuses;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.NeoForge;
 import pie.ilikepiefoo.moddingtemplate.ModdingTemplate;
 
 @Mod(ModdingTemplate.MOD_ID)
 public class ModdingTemplateForge {
     public ModdingTemplateForge() {
-        // Submit our event bus to let architectury register our content on the right time
-        EventBuses.registerModEventBus(ModdingTemplate.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
+        // Register this mod instance with Neoforge's event bus.
+        NeoForge.EVENT_BUS.register(this);
         ModdingTemplate.init();
     }
 }
