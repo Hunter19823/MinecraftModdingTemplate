@@ -6,7 +6,9 @@ var Loader = "Forge"
 
 architectury {
     platformSetupLoomIde()
-    forge()
+    neoForge {
+        platformPackage = "forge"
+    }
 }
 
 configurations {
@@ -18,20 +20,13 @@ configurations {
 }
 
 loom {
-    forge {
-        mixinConfigs(
-            "${mod_id}.mixins.json",
-            "${mod_id}-common.mixins.json",
-        )
-    }
-
     interfaceInjection {
         interfaceInjectionSourceSets.add project(':common').sourceSets.main
     }
 }
 
 dependencies {
-    forge "net.neoforged:forge:${rootProject.minecraft_version}-${rootProject.forge_version}"
+    forge "net.neoforged:neoforge:${rootProject.forge_version}"
     // Remove the next line if you don't want to depend on the API
     modApi "dev.architectury:architectury-${loader}:${rootProject.architectury_version}"
 
