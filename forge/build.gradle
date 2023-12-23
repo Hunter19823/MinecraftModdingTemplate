@@ -18,23 +18,15 @@ configurations {
 }
 
 loom {
-    var accessWidener = project(":common").file("src/main/resources/${mod_id}.accesswidener");
-    if (accessWidener.exists()) {
-        accessWidenerPath = accessWidener
+    forge {
+        mixinConfigs(
+            "${mod_id}.mixins.json",
+            "${mod_id}-common.mixins.json",
+        )
+    }
 
-
-        forge {
-            convertAccessWideners = true
-            extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
-            mixinConfigs(
-                "${mod_id}.mixins.json",
-                "${mod_id}-common.mixins.json",
-            )
-        }
-
-        interfaceInjection {
-            interfaceInjectionSourceSets.add project(':common').sourceSets.main
-        }
+    interfaceInjection {
+        interfaceInjectionSourceSets.add project(':common').sourceSets.main
     }
 }
 

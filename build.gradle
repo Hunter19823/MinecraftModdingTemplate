@@ -105,7 +105,7 @@ subprojects {
 
     sourcesJar {
         from(project(':common').sourceSets.main.allSource) {
-            exclude("${mod_id}.accesswidener") // duplicate on fabric, unneeded on forge
+
         }
     }
 }

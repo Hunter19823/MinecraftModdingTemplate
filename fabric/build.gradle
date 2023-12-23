@@ -24,27 +24,8 @@ configurations {
 }
 
 loom {
-    var accessWidener = project(":common").file("src/main/resources/${mod_id}.accesswidener");
-    if (accessWidener.exists()) {
-        accessWidenerPath = accessWidener
-    }
-}
 
-// The AccessWidener file is needed in :fabric project resources when the game is run.
-tasks.register('copyAccessWidener', Copy) {
-    from project(":common").file("src/main/resources/${mod_id}.accesswidener")
-    into file("src/generated/resources")
 }
-
-sourceSets {
-    main {
-        resources {
-            // srcDir generatedResources
-            srcDir copyAccessWidener
-        }
-    }
-}
-
 
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
