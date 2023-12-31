@@ -1,8 +1,8 @@
 plugins {
     id 'me.shedaniel.unified-publishing'
 }
-var loader = "forge"
-var Loader = "Forge"
+var loader = "neoforge"
+var Loader = "NeoForge"
 
 architectury {
     platformSetupLoomIde()
