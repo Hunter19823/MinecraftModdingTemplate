@@ -18,7 +18,7 @@ configurations {
 }
 
 loom {
-    var accessWidener = project(":common").file("src/main/resources/${mod_id}.accesswidener");
+    var accessWidener = project(":common").file("src/main/resources/${mod_id}.accesswidener")
     if (accessWidener.exists()) {
         accessWidenerPath = accessWidener
 
@@ -37,7 +37,7 @@ loom {
 dependencies {
     forge "net.minecraftforge:forge:${rootProject.minecraft_version}-${rootProject.forge_version}"
     // Remove the next line if you don't want to depend on the API
-    modApi "dev.architectury:architectury-${loader}:${rootProject.architectury_version}"
+    modApi "me.shedaniel:architectury-${loader}:${rootProject.architectury_version}"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
