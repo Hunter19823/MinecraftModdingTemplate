@@ -1,6 +1,6 @@
 package pie.ilikepiefoo.moddingtemplate.forge;
 
-import dev.architectury.platform.forge.EventBuses;
+import me.shedaniel.architectury.platform.forge.EventBuses;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import pie.ilikepiefoo.moddingtemplate.ModdingTemplate;
