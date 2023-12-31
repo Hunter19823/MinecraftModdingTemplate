@@ -48,3 +48,9 @@ versionRange = "[${neoforge_min_version},)" #mandatory
 ordering = "NONE"
 # Side this dependency is applied on - BOTH, CLIENT or SERVER
 side = "BOTH"
+# Register common mixins
+[[mixins]]
+config = "${mod_id}-common.mixins.json"
+# Register neoforge mixins
+[[mixins]]
+config = "${mod_id}.mixins.json"
