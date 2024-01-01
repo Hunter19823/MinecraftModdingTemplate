@@ -10,3 +10,4 @@ changes required to start programming.
 - 1.20.1 Forge / Fabric + Mixins
 - 1.19.2 Forge / Fabric + Mixins + AccessWideners
 - 1.18.2 Forge / Fabric + Mixins + AccessWideners
+- 1.16.5 Forge / Fabric + Mixins + AccessWideners
